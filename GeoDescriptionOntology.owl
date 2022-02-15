@@ -1,0 +1,99 @@
+@prefix : <https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology> .
+
+<https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology> rdf:type owl:Ontology ;
+                                                                  owl:versionIRI <https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology/1> ;
+                                                                  owl:imports <http://purl.obolibrary.org/obo/iao/2020-12-09/iao.owl> ,
+                                                                              <https://www.inf.ufrgs.br/bdi/ontologies/georeservoirontology/2.0> ;
+                                                                  <http://purl.org/dc/elements/1.1/contributor> "Luan Garcia" ;
+                                                                  <http://purl.org/dc/elements/1.1/description> "Ontology for the description of Geological Entities, such as Geological Objects, Amount of Rocks, Basins and others."@en .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_has_author
+:UFRGS:GeoDescription_has_author rdf:type owl:ObjectProperty ;
+                                 rdfs:subPropertyOf <http://purl.obolibrary.org/obo/BFO_0000051> ;
+                                 <http://purl.obolibrary.org/obo/IAO_0000115> "The person who created the geological description. Not necessarily is the same person that inputs the data in the system."@en ;
+                                 rdfs:label "has author"@en .
+
+
+###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_has_descriptor
+:UFRGS:GeoDescription_has_descriptor rdf:type owl:ObjectProperty ;
+                                     rdfs:subPropertyOf <http://purl.obolibrary.org/obo/BFO_0000051> ;
+                                     <http://purl.obolibrary.org/obo/IAO_0000115> "The person who inputs the data in the system, not necessarily the author of the geological descriptions."@en ;
+                                     rdfs:label "has descriptor"@en .
+
+
+###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_has_identifier
+:UFRGS:GeoDescription_has_identifier rdf:type owl:ObjectProperty ;
+                                     rdfs:subPropertyOf <http://purl.obolibrary.org/obo/BFO_0000051> ;
+                                     rdfs:domain :UFRGS:GeoDescription_description ;
+                                     rdfs:range <http://purl.obolibrary.org/obo/IAO_0020000> ;
+                                     <http://purl.obolibrary.org/obo/IAO_0000115> "The relation between a 'geological description' and its unique identifier. This should be the URI of the description."@en ;
+                                     rdfs:label "has identifier"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_update_date
+:UFRGS:GeoDescription_update_date rdf:type owl:DatatypeProperty ;
+                                  rdfs:subPropertyOf owl:topDataProperty ;
+                                  rdfs:label "update date"@en .
+
+
+###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescriptioncreation_date
+:UFRGS:GeoDescriptioncreation_date rdf:type owl:DatatypeProperty ;
+                                   rdfs:subPropertyOf owl:topDataProperty ;
+                                   rdfs:label "creation date"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_description
+:UFRGS:GeoDescription_description rdf:type owl:Class ;
+                                  rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000310> ,
+                                                  [ rdf:type owl:Restriction ;
+                                                    owl:onProperty <http://purl.obolibrary.org/obo/IAO_0000136> ;
+                                                    owl:allValuesFrom <https://www.inf.ufrgs.br/bdi/ontologies/georeservoirontologyUFRGS:GeoReservoirOntology_body_of_rock>
+                                                  ] ,
+                                                  [ rdf:type owl:Restriction ;
+                                                    owl:onProperty :UFRGS:GeoDescription_has_author ;
+                                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                    owl:onClass <http://purl.obolibrary.org/obo/IAO_0000321>
+                                                  ] ,
+                                                  [ rdf:type owl:Restriction ;
+                                                    owl:onProperty :UFRGS:GeoDescription_has_descriptor ;
+                                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                    owl:onClass <http://purl.obolibrary.org/obo/IAO_0000321>
+                                                  ] ,
+                                                  [ rdf:type owl:Restriction ;
+                                                    owl:onProperty :UFRGS:GeoDescription_has_identifier ;
+                                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                    owl:onClass <http://purl.obolibrary.org/obo/IAO_0020000>
+                                                  ] ,
+                                                  [ rdf:type owl:Restriction ;
+                                                    owl:onProperty :UFRGS:GeoDescription_update_date ;
+                                                    owl:someValuesFrom xsd:dateTime
+                                                  ] ,
+                                                  [ rdf:type owl:Restriction ;
+                                                    owl:onProperty :UFRGS:GeoDescriptioncreation_date ;
+                                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                    owl:onDataRange xsd:dateTime
+                                                  ] ;
+                                  <http://purl.obolibrary.org/obo/IAO_0000115> "Uma descrição geológica é uma descrição humana de entidades materiais ou imateriais identificadas em um estudo geológico com base em dados geológicos diretos (testemunho, amostra de mão, etc) ou indiretos (sísmica, log de poço, fotografia, etc)."@pt ;
+                                  rdfs:label "descrição geológica"@pt ,
+                                             "geological description"@en .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
