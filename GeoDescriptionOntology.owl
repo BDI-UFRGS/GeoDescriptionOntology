@@ -42,6 +42,24 @@
                                      rdfs:label "has identifier"@en .
 
 
+###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_has_svg_attribute
+:UFRGS:GeoDescription_has_svg_attribute rdf:type owl:ObjectProperty ;
+                                        rdfs:subPropertyOf <http://purl.obolibrary.org/obo/BFO_0000051> ;
+                                        rdfs:label "has svg attribute"@en .
+
+
+###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_has_svg_element
+:UFRGS:GeoDescription_has_svg_element rdf:type owl:ObjectProperty ;
+                                      rdfs:subPropertyOf <http://purl.obolibrary.org/obo/BFO_0000051> ;
+                                      rdfs:label "has svg element"@en .
+
+
+###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_has_two_dimensional_point
+:UFRGS:GeoDescription_has_two_dimensional_point rdf:type owl:ObjectProperty ;
+                                                rdfs:subPropertyOf <http://purl.obolibrary.org/obo/BFO_0000051> ;
+                                                rdfs:label "has two dimensional point"@en .
+
+
 #################################################################
 #    Data properties
 #################################################################
@@ -50,6 +68,11 @@
 :UFRGS:GeoDescription_creation_date rdf:type owl:DatatypeProperty ;
                                     rdfs:subPropertyOf owl:topDataProperty ;
                                     rdfs:label "creation date"@en .
+
+
+###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_has_literal
+:UFRGS:GeoDescription_has_literal rdf:type owl:DatatypeProperty ;
+                                  rdfs:label "has literal"@en .
 
 
 ###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_update_date
@@ -61,6 +84,13 @@
 #################################################################
 #    Classes
 #################################################################
+
+###  http://purl.obolibrary.org/obo/IAO_0000590
+<http://purl.obolibrary.org/obo/IAO_0000590> rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                               owl:onProperty :UFRGS:GeoDescription_has_literal ;
+                                                               owl:someValuesFrom xsd:string
+                                                             ] .
+
 
 ###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_description
 :UFRGS:GeoDescription_description rdf:type owl:Class ;
@@ -94,6 +124,55 @@
                                   <http://purl.obolibrary.org/obo/IAO_0000115> "Uma descrição geológica é uma descrição humana de entidades materiais ou imateriais identificadas em um estudo geológico com base em dados geológicos diretos (testemunho, amostra de mão, etc) ou indiretos (sísmica, log de poço, fotografia, etc)."@pt ;
                                   rdfs:label "descrição geológica"@pt ,
                                              "geological description"@en .
+
+
+###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_scalable_vector_graphics
+:UFRGS:GeoDescription_scalable_vector_graphics rdf:type owl:Class ;
+                                               rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000309> ,
+                                                               [ rdf:type owl:Restriction ;
+                                                                 owl:onProperty :UFRGS:GeoDescription_has_svg_element ;
+                                                                 owl:someValuesFrom :UFRGS:GeoDescription_svg_element
+                                                               ] ;
+                                               <http://purl.obolibrary.org/obo/IAO_0000118> "scalable vector graphics"@en ;
+                                               rdfs:label "svg"@en ,
+                                                          "svg"@pt .
+
+
+###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_svg_attribute
+:UFRGS:GeoDescription_svg_attribute rdf:type owl:Class ;
+                                    rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000309> ;
+                                    rdfs:label "svg attribute"@en .
+
+
+###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_svg_element
+:UFRGS:GeoDescription_svg_element rdf:type owl:Class ;
+                                  rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000309> ,
+                                                  [ rdf:type owl:Restriction ;
+                                                    owl:onProperty :UFRGS:GeoDescription_has_svg_attribute ;
+                                                    owl:someValuesFrom :UFRGS:GeoDescription_svg_attribute
+                                                  ] ;
+                                  rdfs:label "svg element"@en .
+
+
+###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_svg_point
+:UFRGS:GeoDescription_svg_point rdf:type owl:Class ;
+                                rdfs:subClassOf :UFRGS:GeoDescription_svg_attribute ,
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty :UFRGS:GeoDescription_has_two_dimensional_point ;
+                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                  owl:onClass <http://purl.obolibrary.org/obo/IAO_0000402>
+                                                ] ;
+                                rdfs:label "svg point"@en .
+
+
+###  https://www.inf.ufrgs.br/bdi/ontologies/geodescriptionontology#UFRGS:GeoDescription_svg_polygon
+:UFRGS:GeoDescription_svg_polygon rdf:type owl:Class ;
+                                  rdfs:subClassOf :UFRGS:GeoDescription_svg_element ,
+                                                  [ rdf:type owl:Restriction ;
+                                                    owl:onProperty :UFRGS:GeoDescription_has_svg_attribute ;
+                                                    owl:someValuesFrom :UFRGS:GeoDescription_svg_point
+                                                  ] ;
+                                  rdfs:label "svg polygon"@en .
 
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
